@@ -1,5 +1,6 @@
 package com.joker.userserver.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -7,15 +8,18 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+    //@Autowired
+    //TokenStore tokenStore;
 
     @Bean
     RemoteTokenServices tokenServices() {
         RemoteTokenServices services = new RemoteTokenServices();
-        services.setCheckTokenEndpointUrl("http://localhost:8084/oauth/check_token");
+        services.setCheckTokenEndpointUrl("http://localhost:8080/oauth/check_token");
         services.setClientId("joker");
         services.setClientSecret("1");
         return services;
@@ -24,6 +28,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         resources.resourceId("res1").tokenServices(tokenServices());
+        //resources.resourceId("res1").tokenStore(tokenStore);
     }
 
     @Override

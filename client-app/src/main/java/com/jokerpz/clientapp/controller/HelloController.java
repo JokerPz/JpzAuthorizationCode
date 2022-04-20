@@ -55,7 +55,8 @@ public class HelloController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("authorization", "Bearer " + access_token);
         HttpEntity<Object> httpEntity = new HttpEntity<>(httpHeaders);
-        ResponseEntity<String> entity = restTemplate.exchange("http://localhost:8081/admin/hello", HttpMethod.GET, httpEntity, String.class);
+        ResponseEntity<String> entity = restTemplate.exchange("http://localhost:8081/" +
+                "/hello", HttpMethod.GET, httpEntity, String.class);
         model.addAttribute("msg", entity.getBody());
         return "password";
     }
